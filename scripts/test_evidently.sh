@@ -1,4 +1,10 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+source "${SCRIPT_DIR}/telegram_test_alert.sh"
+install_test_failure_alert "Evidently integration"
 
 # ============================================
 # TEST EVIDENTLY AI INTEGRATION
@@ -177,4 +183,3 @@ echo ""
 
 # Cleanup
 rm -f /tmp/sample_reference.json
-

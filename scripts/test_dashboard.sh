@@ -1,4 +1,10 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+source "${SCRIPT_DIR}/telegram_test_alert.sh"
+install_test_failure_alert "Grafana drift dashboard"
 
 # ============================================
 # TEST GRAFANA DRIFT DASHBOARD

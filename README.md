@@ -309,6 +309,34 @@ TELEGRAM_CHAT_ID=-1001234567890
 Create the bot with `@BotFather`, add it to the target chat/channel, and use
 the target chat ID. Telegram alerts use the Bot API `sendMessage` endpoint.
 
+Shell test failures are also sent to Telegram when `TELEGRAM_BOT_TOKEN` and
+`TELEGRAM_CHAT_ID` are configured. This covers `scripts/test_dashboard.sh`,
+`scripts/test_evidently.sh`, and `simulations/quick_test.sh`. Telegram delivery
+errors are logged without replacing the original test failure.
+
+The `runtime-monitor` service also sends Telegram alerts for FastAPI/Evidently/
+MLflow/MinIO/Grafana health failures, prediction errors, detected drift, active
+Prometheus alerts, and monitored container restarts. It sends one alert when a
+condition starts and a recovery message when it clears. Start it with:
+
+```bash
+docker-compose up -d runtime-monitor
+```
+
+To test a real Airflow task failure, use the paused `telegram_alert_test` DAG.
+It fails intentionally, creates a normal Airflow task log, and sends a Telegram
+failure alert through the same callback used by the training pipeline:
+
+```bash
+docker-compose -p ml-monitoring exec airflow-scheduler \
+  airflow dags trigger telegram_alert_test
+
+docker-compose -p ml-monitoring logs -f airflow-scheduler
+```
+
+In the Airflow UI, open `telegram_alert_test` → the latest run →
+`fail_on_purpose` → **Log**. The expected task state is `Failed`.
+
 ### Generate Test Metrics (API & Drift)
 
 Run the helper scripts to generate traffic and metrics:

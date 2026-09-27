@@ -189,6 +189,39 @@ services:
     restart: unless-stopped
 
   # ==========================================
+  # RUNTIME TELEGRAM ALERT MONITOR
+  # ==========================================
+  runtime-monitor:
+    build:
+      context: ./monitoring
+      dockerfile: Dockerfile
+    container_name: ${USER}_monitoring-runtime-monitor
+    environment:
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+      TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID:-}
+      PROMETHEUS_URL: http://prometheus:9090
+      RUNTIME_MONITOR_INTERVAL_SECONDS: ${RUNTIME_MONITOR_INTERVAL_SECONDS:-30}
+      USER: ${USER}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    depends_on:
+      prometheus:
+        condition: service_started
+      api:
+        condition: service_started
+      evidently:
+        condition: service_started
+      mlflow:
+        condition: service_started
+      minio:
+        condition: service_started
+      grafana:
+        condition: service_started
+    networks:
+      - monitoring
+    restart: unless-stopped
+
+  # ==========================================
   # EVIDENTLY AI - DRIFT DETECTION
   # ==========================================
   evidently:

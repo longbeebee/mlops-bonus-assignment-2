@@ -1,4 +1,10 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+source "${SCRIPT_DIR}/../scripts/telegram_test_alert.sh"
+install_test_failure_alert "Simulation quick test"
 
 # ============================================
 # QUICK TEST - Simulation System

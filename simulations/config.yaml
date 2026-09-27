@@ -15,68 +15,75 @@ model:
   version: "1"
   feature_count: 13
 
-# Wine Dataset Feature Ranges (for realistic data generation)
+# sklearn Wine Dataset Feature Ranges (the dataset used by scripts/train_model.py)
+# The model is trained on 13 columns. Keep these keys as feature_0..feature_12
+# because Airflow writes the Evidently reference dataset with the same names.
 features:
-  fixed_acidity:
-    min: 4.6
-    max: 15.9
-    mean: 8.32
-    std: 1.74
-  volatile_acidity:
-    min: 0.12
-    max: 1.58
-    mean: 0.53
-    std: 0.18
-  citric_acid:
-    min: 0.0
-    max: 1.0
-    mean: 0.27
-    std: 0.19
-  residual_sugar:
-    min: 0.9
-    max: 15.5
-    mean: 2.54
-    std: 1.41
-  chlorides:
-    min: 0.012
-    max: 0.611
-    mean: 0.087
-    std: 0.047
-  free_sulfur_dioxide:
-    min: 1.0
-    max: 72.0
-    mean: 15.87
-    std: 10.46
-  total_sulfur_dioxide:
-    min: 6.0
-    max: 289.0
-    mean: 46.47
-    std: 32.90
-  density:
-    min: 0.99007
-    max: 1.00369
-    mean: 0.9967
-    std: 0.0019
-  pH:
-    min: 2.74
-    max: 4.01
-    mean: 3.31
-    std: 0.15
-  sulphates:
-    min: 0.33
-    max: 2.0
-    mean: 0.66
-    std: 0.17
-  alcohol:
-    min: 8.4
-    max: 14.9
-    mean: 10.42
-    std: 1.07
-  quality:
-    min: 3
-    max: 8
-    mean: 5.64
-    std: 0.81
+  feature_0:
+    min: 11.03
+    max: 14.83
+    mean: 13.0006
+    std: 0.8095
+  feature_1:
+    min: 0.74
+    max: 5.8
+    mean: 2.3363
+    std: 1.1140
+  feature_2:
+    min: 1.36
+    max: 3.23
+    mean: 2.3665
+    std: 0.2736
+  feature_3:
+    min: 10.6
+    max: 30.0
+    mean: 19.4949
+    std: 3.3302
+  feature_4:
+    min: 70.0
+    max: 162.0
+    mean: 99.7416
+    std: 14.2423
+  feature_5:
+    min: 0.98
+    max: 3.88
+    mean: 2.2951
+    std: 0.6241
+  feature_6:
+    min: 0.34
+    max: 5.08
+    mean: 2.0293
+    std: 0.9960
+  feature_7:
+    min: 0.13
+    max: 0.66
+    mean: 0.3619
+    std: 0.1241
+  feature_8:
+    min: 0.41
+    max: 3.58
+    mean: 1.5909
+    std: 0.5707
+  feature_9:
+    min: 1.28
+    max: 13.0
+    mean: 5.0581
+    std: 2.3118
+  feature_10:
+    min: 0.48
+    max: 1.71
+    mean: 0.9574
+    std: 0.2279
+  feature_11:
+    min: 1.27
+    max: 4.0
+    mean: 2.6117
+    std: 0.7080
+  feature_12:
+    min: 278.0
+    max: 1680.0
+    mean: 746.8933
+    std: 314.0217
 
 # Simulation Scenarios
 scenarios:
@@ -136,4 +143,3 @@ defaults:
   analyze_after_completion: true
   show_progress: true
   log_level: "INFO"
-
